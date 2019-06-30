@@ -21,7 +21,7 @@ var server = net.createServer((socket)=>{
 	});
 });
 
-server.listen(1337, 'datrack.org');
+server.listen(cfg.port, 'localhost');
 
 
 

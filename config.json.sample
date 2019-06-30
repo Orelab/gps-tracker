@@ -1,4 +1,5 @@
 {
+        "port": 1337,
         "tracker": "TRACKER-ID",
         "dbName": "DATABASE-NAME",
         "dbUser": "USER-NAME",
