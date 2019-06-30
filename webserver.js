@@ -1,4 +1,5 @@
 var fs = require('fs');
+var cfg = require('./config.json');
 
 
 exports.isHTTP = function isHTTP(request){
@@ -34,10 +35,9 @@ exports.responseFile = function responseFile(file, socket){
 }
 
 exports.responseString = function responseString(str, mime, socket){
-
     var headers = "HTTP/1.1 200 OK\r\n"
-        + "Server: GPS Tracker\r\n"
-        + "Content-Length: " + str.size + "\r\n"
+        + "Server: " + cfg.server + "\r\n"
+        + "Content-Length: " + str.length + "\r\n"
         + "Content-Type: " + mime + "\r\n"
         + "\r\n";
 
@@ -58,6 +58,6 @@ exports.getMIME = function getMIME(filename){
         case 'ico': return 'image/x-icon';
         case 'css': return 'text/css';
         case 'js': return 'application/javascript';
-        default: return 'text/html';
+        default: return 'text/html; charset=utf-8';
     }
 }

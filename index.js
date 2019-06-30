@@ -38,7 +38,10 @@ var server = net.createServer((socket)=>{
 
 					connection.query(sql, (error,results,fields)=>{
 						if (error) throw error;
-						ws.responseString(JSON.stringify(results[0]), 'application/json', socket);
+						if(results.length)
+							ws.responseString(JSON.stringify(results[0]), 'application/json', socket);
+							else
+							ws.responseString('{lat:0,lng:0}', 'application/json', socket);
 					});
 			
 					
