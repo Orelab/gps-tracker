@@ -30,8 +30,23 @@ var server = net.createServer((socket)=>{
 		//-- A browser navigate the website
 
 		if( ws.isHTTP(data.toString()) ){
-			let url = ws.extractURL(data.toString());
-			ws.response(url, socket);
+			let url = ws.getURL(data.toString());
+
+			switch(url){		// router
+				case '/lastposition': 
+					var sql = "SELECT * FROM log ORDER BY id DESC LIMIT 1;";
+
+					connection.query(sql, (error,results,fields)=>{
+						if (error) throw error;
+						ws.responseString(JSON.stringify(results[0]), 'application/json', socket);
+					});
+			
+					
+					break;
+				default:
+					ws.responseFile(url, socket);
+			}
+			
 		}
 	});
 });
@@ -57,7 +72,7 @@ connection.connect();
 
 //-- Misc functions
 
-function save( str, coords ){
+let save = (str, coords) => {
 	if( str.substring(1,13) != cfg.tracker ){
 		return;
 	}
@@ -74,7 +89,7 @@ function save( str, coords ){
 }
 
 
-function latLng( arr ){
+let latLng = (arr) => {
 	var date = arr[2];
 
 	var latDeg = arr[4].substring(0,2);

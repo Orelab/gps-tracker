@@ -6,7 +6,7 @@ exports.isHTTP = function isHTTP(request){
 }
 
 
-exports.extractURL = function extractURL(request){
+exports.getURL = function getURL(request){
     var first_line = request.split("\r")[0].split(' ')[1];
 
     if( first_line=="/" ){
@@ -16,20 +16,48 @@ exports.extractURL = function extractURL(request){
 }
 
 
-exports.response = function response(file, socket){
-
+exports.responseFile = function responseFile(file, socket){
     fs.readFile('./public'+file, 'utf8', function(err, contents){
-
         if( typeof contents==='undefined' ){
             return;
         }
+        const stats = fs.statSync('./public'+file);
 
         var headers = "HTTP/1.1 200 OK\r\n"
             + "Server: GPS Tracker\r\n"
-            + "Content-Length: " + (contents.length+2) + "\r\n"
-            + "Content-Type: text/html\r\n"
-            + "\r\n\r\n";
+            + "Content-Length: " + stats.size + "\r\n"
+            + "Content-Type: " + exports.getMIME(file) + "\r\n"
+            + "\r\n";
 
         socket.write(headers + contents);
     });
+}
+
+exports.responseString = function responseString(str, mime, socket){
+
+    var headers = "HTTP/1.1 200 OK\r\n"
+        + "Server: GPS Tracker\r\n"
+        + "Content-Length: " + str.size + "\r\n"
+        + "Content-Type: " + mime + "\r\n"
+        + "\r\n";
+
+    socket.write(headers + str);
+
+}
+
+
+
+exports.getMIME = function getMIME(filename){
+    // https://fr.wikipedia.org/wiki/Type_de_m%C3%A9dias
+
+    let extension = filename.split('.').slice(-1).pop();
+
+    switch( extension ){
+        case 'jpg': return 'image/jpg';
+        case 'png': return 'image/png';
+        case 'ico': return 'image/x-icon';
+        case 'css': return 'text/css';
+        case 'js': return 'application/javascript';
+        default: return 'text/html';
+    }
 }
