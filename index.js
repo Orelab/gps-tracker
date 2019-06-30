@@ -45,9 +45,9 @@ server.listen(cfg.port, cfg.server);
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
   host     : 'localhost',
-  user     : cfg.dbUser,
-  password : cfg.dbPass,
-  database : cfg.dbName
+  user     : cfg.db.user,
+  password : cfg.db.pass,
+  database : cfg.db.name
 });
  
 connection.connect();
