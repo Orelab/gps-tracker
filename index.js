@@ -7,21 +7,36 @@ const cfg = require('./config.json');
 //-- TCP stuff
 
 var net = require('net');
+var ws = require('./webserver.js');
 
 var server = net.createServer((socket)=>{
-	//socket.write('Echo server\r\n');
 
 	socket.on('data', (data)=>{
+
+		//-- A tracker send coordinates
+
 		var arr = data.toString().match(/[a-z]+|[0-9,\.]+/ig);
 
-		if( arr.length>4 && arr[1]=='BR' ){
+		if( arr.length>2 && arr[1]=='BR' ){
 			var coords = latLng(arr);
 			save(data.toString(), coords);
+			return;
+		}
+
+		if( arr.length>2 && arr[1]=='BP' ){	// unlogged tracker messages
+			return;	
+		}
+
+		//-- A browser navigate the website
+
+		if( ws.isHTTP(data.toString()) ){
+			let url = ws.extractURL(data.toString());
+			ws.response(url, socket);
 		}
 	});
 });
 
-server.listen(cfg.port, 'localhost');
+server.listen(cfg.port, cfg.server);
 
 
 
@@ -55,7 +70,6 @@ function save( str, coords ){
 
 	connection.query(sql, (error,results,fields)=>{
   		if (error) throw error;
-		//console.log('The solution is: ', results[0].solution);
 	});
 }
 

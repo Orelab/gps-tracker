@@ -1,0 +1,12 @@
+{
+        "port": 1337,
+        "server": "domain.net",
+        "tracker": "TRACKER-ID",
+        "db": {
+                "name": "DATABASE-NAME",
+                "user": "USER-NAME",
+                "pass": "PASSWORD"
+        },
+        "geofence": false
+}
+
