@@ -1,5 +1,5 @@
 
-$.ajax('/lastposition').done((data)=>{
+$.ajax('/lastposition').done((data) => {
     var map = L.map('mapid').setView([data.lat, data.lng], 18);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
