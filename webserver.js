@@ -59,7 +59,7 @@ exports.responseFile = function responseFile(file, socket){
             + "\r\n";
 
         socket.write(headers + contents);
-        //socket.end(headers + contents.toString('base64'));
+        socket.end();
     });
 }
 
@@ -71,7 +71,7 @@ exports.responseString = function responseString(str, mime, socket){
         + "\r\n";
 
     socket.write(headers + str);
-    //socket.end(headers + str);
+    socket.end();
 
 }
 
