@@ -41,18 +41,27 @@ exports.responseByte = function responseByte(file, socket){
     socket.write(headers);
 
     var stream = fs.createReadStream('./public'+file);
-    stream.pipe(socket);
+    stream.on('open',()=>{
+        stream.pipe(socket);
+    });
+    stream.on('end',()=>{
+        socket.end();
+        //socket.close();
+        socket.destroy();
+    });
+    //stream.pipe(socket);
 }
 
 
-exports.responseFile = function responseFile(file, socket){
+
+exports.responseFile = function responseFile(file, socket, code=200){
     fs.readFile('./public'+file, 'utf8', function(err, contents){
         if( typeof contents==='undefined' ){
             return;
         }
         const stats = fs.statSync('./public'+file);
 
-        var headers = "HTTP/1.1 200 OK\r\n"
+        var headers = "HTTP/1.1 " + code + " OK\r\n"
             + "Server: " + cfg.server + "\r\n"
             + "Content-Length: " + stats.size + "\r\n"
             + "Content-Type: " + exports.getMIME(file) + "\r\n"
@@ -60,6 +69,8 @@ exports.responseFile = function responseFile(file, socket){
 
         socket.write(headers + contents);
         socket.end();
+        //socket.close();
+        socket.destroy();
     });
 }
 
@@ -72,6 +83,8 @@ exports.responseString = function responseString(str, mime, socket){
 
     socket.write(headers + str);
     socket.end();
+    //socket.close();
+    socket.destroy();
 
 }
 

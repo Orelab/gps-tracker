@@ -1,3 +1,6 @@
+const fs = require('fs');
+
+
 
 //-- Configuration
 
@@ -6,10 +9,16 @@ const cfg = require('./config.json');
 
 //-- TCP stuff
 
-var net = require('net');
-var ws = require('./webserver.js');
+const net = require('net');
+const ws = require('./webserver.js');
 
 var server = net.createServer((socket)=>{
+
+	socket.on('error', (err)=>{
+		//socket.emit('error', err);
+		console.log(err);
+		console.log(err.stack);
+	});
 
 	socket.on('data', (data)=>{
 
@@ -42,22 +51,27 @@ var server = net.createServer((socket)=>{
 							ws.responseString(JSON.stringify(results[0]), 'application/json', socket);
 							else
 							ws.responseString('{lat:0,lng:0}', 'application/json', socket);
-					});
-			
-					
+						});
+						console.log('200: '+url);
 					break;
+
 				default:
+					if( ! fs.existsSync('./public'+url)){
+						ws.responseFile('404.html', socket, 404);
+						console.log('404: '+url);
+						break;
+					}
 					if( ws.isByte(url))
 						ws.responseByte(url, socket);
 						else
 						ws.responseFile(url, socket);
+
+					console.log('200: '+url);
 			}
 			
 		}
 	});
-});
-
-server.listen(cfg.port, cfg.server);
+}).listen(cfg.port);
 
 
 
