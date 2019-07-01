@@ -25,7 +25,8 @@ exports.responseFile = function responseFile(file, socket){
         const stats = fs.statSync('./public'+file);
 
         var headers = "HTTP/1.1 200 OK\r\n"
-            + "Server: GPS Tracker\r\n"
+            + "Server: " + cfg.server + "\r\n"
+            + "Status: 200\r\n"
             + "Content-Length: " + stats.size + "\r\n"
             + "Content-Type: " + exports.getMIME(file) + "\r\n"
             + "\r\n";
@@ -37,6 +38,7 @@ exports.responseFile = function responseFile(file, socket){
 exports.responseString = function responseString(str, mime, socket){
     var headers = "HTTP/1.1 200 OK\r\n"
         + "Server: " + cfg.server + "\r\n"
+        + "Status: 200\r\n"
         + "Content-Length: " + str.length + "\r\n"
         + "Content-Type: " + mime + "\r\n"
         + "\r\n";
