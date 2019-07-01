@@ -47,7 +47,10 @@ var server = net.createServer((socket)=>{
 					
 					break;
 				default:
-					ws.responseFile(url, socket);
+					if( ws.isByte(url))
+						ws.responseByte(url, socket);
+						else
+						ws.responseFile(url, socket);
 			}
 			
 		}

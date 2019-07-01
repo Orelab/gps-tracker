@@ -17,6 +17,34 @@ exports.getURL = function getURL(request){
 }
 
 
+exports.isByte = (filename) => {
+    let extension = filename.split('.').slice(-1).pop();
+
+    switch(extension){
+        case 'jpg':
+        case 'png':
+            return true;
+        default:
+            return false;
+    }
+}
+
+
+exports.responseByte = function responseByte(file, socket){
+
+    var headers = "HTTP/1.1 200 OK\r\n"
+        + "Server: " + cfg.server + "\r\n"
+    //    + "Content-Length: " + stats.size + "\r\n"
+        + "Content-Type: " + exports.getMIME(file) + "\r\n"
+        + "\r\n";
+
+    socket.write(headers);
+
+    var stream = fs.createReadStream('./public'+file);
+    stream.pipe(socket);
+}
+
+
 exports.responseFile = function responseFile(file, socket){
     fs.readFile('./public'+file, 'utf8', function(err, contents){
         if( typeof contents==='undefined' ){
@@ -30,8 +58,8 @@ exports.responseFile = function responseFile(file, socket){
             + "Content-Type: " + exports.getMIME(file) + "\r\n"
             + "\r\n";
 
-        socket.write(headers + contents.toString('base64'));
-        socket.end();
+        socket.write(headers + contents);
+        //socket.end(headers + contents.toString('base64'));
     });
 }
 
@@ -43,7 +71,7 @@ exports.responseString = function responseString(str, mime, socket){
         + "\r\n";
 
     socket.write(headers + str);
-    socket.end();
+    //socket.end(headers + str);
 
 }
 
