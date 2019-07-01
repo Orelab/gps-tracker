@@ -21,16 +21,15 @@ Note that you'll have to tune your GPS tracker too. In mine, I had to send by SM
 ```
 server,666666,1,domain.net,1337,0#
 ```
-Of course, you'll have to put the same domain and port here that in config.json.
+Of course, you'll have to put the same domain and port here than in config.json.
 
 
 # Roadmap
 
 ```
-1. make the server log the tracker position !
-2. build an interface which allow to visualize the tracker position
-3. tinker a geofencing functionality
-4. add a process which prevent if the tracker stops emiting data
+1. make the server log the tracker position (done)
+2. build an interface which allow to visualize the tracker position (in progress)
+3. tinker a geofencing functionality (to do)
+4. add a process which prevent if the tracker stops emiting data (to do)
 ```
-For now, as the project just started, I just released the first step, as a prototype :)
 
