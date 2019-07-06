@@ -1,6 +1,2 @@
 node_modules
 config.json
-OpenGTS*
-open-gts*
-*.zip
-public/*.map
