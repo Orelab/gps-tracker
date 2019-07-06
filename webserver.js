@@ -30,9 +30,9 @@ exports.isByte = (filename) => {
 }
 
 
-exports.responseByte = function responseByte(file, socket){
+exports.responseByte = function responseByte(file, socket, code=200){
 
-    var headers = "HTTP/1.1 200 OK\r\n"
+    var headers = "HTTP/1.1 "+code+" OK\r\n"
         + "Server: " + cfg.server + "\r\n"
     //    + "Content-Length: " + stats.size + "\r\n"
         + "Content-Type: " + exports.getMIME(file) + "\r\n"
@@ -99,8 +99,8 @@ exports.getMIME = function getMIME(filename){
         case 'jpg': return 'image/jpg';
         case 'png': return 'image/png';
         case 'ico': return 'image/x-icon';
-        case 'css': return 'text/css';
-        case 'js': return 'application/javascript';
+        case 'css': return 'text/css; charset=utf-8';
+        case 'js': return 'application/javascript; charset=utf-8';
         default: return 'text/html; charset=utf-8';
     }
 }
