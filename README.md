@@ -14,6 +14,7 @@ git clone git@github.com:Orelab/gps-tracker.git
 npm install
 cp config.json.sample config.json
 # update your config.json now
+# create the database with the provided SQL file
 node index.js
 ```
 Note that you'll have to tune your GPS tracker too. In mine, I had to send by SMS the following message
@@ -28,8 +29,9 @@ Of course, you'll have to put the same domain and port here than in config.json.
 
 ```
 1. make the server log the tracker position (done)
-2. build an interface which allow to visualize the tracker position (in progress)
-3. tinker a geofencing functionality (to do)
-4. add a process which prevent if the tracker stops emiting data (to do)
+2. build an interface which allow to visualize the tracker position (done)
+3. make the tracker configurable thru the server GUI (in progress)
+4. tinker a geofencing functionality (to do)
+5. add a process which prevent if the tracker stops emiting data (to do)
 ```
 
