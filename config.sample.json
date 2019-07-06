@@ -1,7 +1,12 @@
 {
-        "port": 1337,
-        "server": "domain.net",
-        "tracker": "TRACKER-ID",
+        "tracker": {
+                "port": 1337,
+                "id": "TRACKER-ID"
+        },
+        "web": {
+                "address": "domain.net",
+                "port": 1338
+        },
         "db": {
                 "name": "DATABASE-NAME",
                 "user": "USER-NAME",
