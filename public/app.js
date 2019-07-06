@@ -9,3 +9,35 @@ $.ajax('/lastposition').done((data) => {
     var marker = L.marker([data.lat, data.lng]).addTo(map);    
 });
 
+
+
+$('#gmap-url').on('click', () => {
+    sendMessage('URL,666666#');
+});
+
+
+$('#gmap-position').on('click', () => {
+    sendMessage('WHERE,666666#');
+});
+
+
+function sendMessage( msg ){
+    let message = encodeURIComponent(msg);
+    let server = $('#sms-server').val();
+
+    console.log(server+message);
+    $.ajax({
+        url: server+message,
+        crossDomain: true,
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function (response) {
+            console.log(response);
+        },
+        error: function (xhr, status) {
+            console.log(xhr);
+            console.log(status);
+        }
+    });
+}
