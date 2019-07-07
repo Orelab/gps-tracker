@@ -61,7 +61,7 @@ const app = express();
 app.use(express.static('public'));
 
 app.get('/lastposition', function (req, res) {
-	var sql = "SELECT * FROM log ORDER BY id DESC LIMIT 1;";
+	var sql = "SELECT id, date, lat, lng FROM log ORDER BY id DESC LIMIT 1;";
 
 	connection.query(sql, (error, results, fields) => {
 		if (error) {
@@ -79,7 +79,7 @@ app.get('/lastposition', function (req, res) {
 
 
 app.get('/lasthundred', function (req, res) {
-	var sql = "SELECT * FROM log ORDER BY id DESC LIMIT 100;";
+	var sql = "SELECT id, date, lat, lng FROM log ORDER BY id DESC LIMIT 1000;";
 
 	connection.query(sql, (error, results, fields) => {
 		if (error) {
@@ -88,7 +88,7 @@ app.get('/lasthundred', function (req, res) {
 			return;
 		}
 		if (results.length)
-			res.json(results);
+			res.json( results.reverse() );
 		else
 			res.json({ lat: 48.8589506, lng: 2.2768484 });
 	});
