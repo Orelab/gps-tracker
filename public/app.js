@@ -1,16 +1,22 @@
 let points;
 let marker;
+let map;
+
 
 $.ajax('/lasthundred').done((data) => {
     points = data;
 
     let lastItem = data[data.length-1];
 
-    setMarker( lastItem );
+    map = L.map('mapid').setView([lastItem.lat, lastItem.lng], 18);
 
-    //-- update timeline
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
 
-    $('#timeline').attr('max', data.length-1);
+    setMarker(lastItem);
+
+    $('#timeline').attr('max', data.length-1).val(data.length-1);
 });
 
 
@@ -30,13 +36,12 @@ $('#timeline').on('change', function(){
 });
 
 const setMarker = data => {
-    var map = L.map('mapid').setView([data.lat, data.lng], 18);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-    
-    marker = L.marker([data.lat, data.lng]).addTo(map);
+    if( ! marker ){
+        marker = L.marker([data.lat, data.lng]).addTo(map);
+        marker.bindPopup("").openPopup();
+    } else {
+        marker.setLatLng(new L.LatLng(data.lat, data.lng)); 
+    }
 
     var opt = {
         weekday:'long', 
@@ -49,8 +54,7 @@ const setMarker = data => {
     };
     var time = ( new Date(data.date) ).toLocaleTimeString('fr-FR', opt);
 
-    marker.bindPopup("<b>Last recording :</b><br>"+time).openPopup();
-
+    marker._popup.setContent("<b>Last recording :</b><br>"+time);
 }
 
 
