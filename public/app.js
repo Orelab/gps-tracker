@@ -20,16 +20,6 @@ $.ajax('/lasthundred').done((data) => {
 });
 
 
-
-$('#gmap-url').on('click', () => {
-    sendMessage('URL');
-});
-
-
-$('#gmap-position').on('click', () => {
-    sendMessage('WHERE');
-});
-
 $('#timeline').on('input', function(){
     let id = $(this).val();
     setMarker( points[id] );
