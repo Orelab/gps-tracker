@@ -12,7 +12,7 @@ body {
     height: 100%;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 768px) {
     header,
     h3 {
         display: none;
