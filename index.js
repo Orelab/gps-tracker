@@ -5,6 +5,7 @@ const cfg = require('./config.json');
 
 
 
+
 //-- Mysql stuff
 
 var mysql = require('mysql');
@@ -75,6 +76,31 @@ app.get('/lastposition', function (req, res) {
 	});
 });
 
+
+
+app.get('/lasthundred', function (req, res) {
+	var sql = "SELECT * FROM log ORDER BY id DESC LIMIT 100;";
+
+	connection.query(sql, (error, results, fields) => {
+		if (error) {
+			res.status(500);
+			res.send(error);
+			return;
+		}
+		if (results.length)
+			res.json(results);
+		else
+			res.json({ lat: 48.8589506, lng: 2.2768484 });
+	});
+});
+
+
+app.get('/order', function (req, res) {
+	sendOrder( req.query.msg );
+	res.send('done.');
+});
+
+
 app.listen(cfg.web.port, function () {
 	console.log('HTTP server launched on port ' + cfg.web.port + ' !');
 });
@@ -120,3 +146,33 @@ let latLng = (arr) => {
 }
 
 
+let sendOrder = (msg) => {
+	const https = require('https');
+
+	let order = '';
+
+	switch(msg){
+		case "URL": order = 'URL,'+cfg.tracker.password+'#'; break;
+		case "WHERE": order = 'WHERE,'+cfg.tracker.password+'#'; break;
+		default: return;
+	}
+
+	const url = cfg.sms + encodeURI(order);
+
+	console.log(url);
+
+	https.get(url, (resp) => {
+		let data = '';
+	  
+		resp.on('data', (chunk) => {
+		  data += chunk;
+		});
+	  
+		resp.on('end', () => {
+		  console.log(data);
+		});
+	  
+	  }).on("error", (err) => {
+		console.log(err);
+	  });
+}

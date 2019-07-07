@@ -1,7 +1,9 @@
 {
+        "sms": "https://smsapi.free-mobile.fr/sendmsg?msg=%s",
         "tracker": {
                 "port": 1337,
-                "id": "TRACKER-ID"
+                "id": "TRACKER-ID",
+                "password":"666666"
         },
         "web": {
                 "port": 1338
