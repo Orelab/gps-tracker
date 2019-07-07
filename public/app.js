@@ -30,7 +30,7 @@ $('#gmap-position').on('click', () => {
     sendMessage('WHERE');
 });
 
-$('#timeline').on('change', function(){
+$('#timeline').on('input', function(){
     let id = $(this).val();
     setMarker( points[id] );
 });
