@@ -18,7 +18,10 @@
 
 <body class="container-fluid">
     <div class="row">
-        <div id="mapid" class="col-lg-6"></div>
+        <div class="col-lg-6">
+            <div id="mapid"></div>
+            <input type="range" class="form-control" name="timeline" id="timeline" min="0" max="100" value="100">
+        </div>
 
         <div class="col-lg-6">
 
@@ -26,17 +29,6 @@
                 <h1>GPS Tracker</h1>
 
             </header>
-
-
-
-            <h3>Controls</h3>
-            <div class="form-group row">
-                <label for="timeline" class="col-2 col-form-label">Timeline</label>
-                <div class="col-10">
-                    <input type="range" class="form-control" name="timeline" id="timeline" min="0" max="100" value="100">
-                </div>
-            </div>
-
 
 
             <h3>Configuration</h3>

@@ -9,7 +9,7 @@ body {
 }
 
 #mapid {
-    height: 100%;
+    height: calc(100% - 45px);
 }
 
 @media (max-width: 992px) {
