@@ -4,7 +4,6 @@
                 "id": "TRACKER-ID"
         },
         "web": {
-                "address": "domain.net",
                 "port": 1338
         },
         "db": {
@@ -12,6 +11,46 @@
                 "user": "USER-NAME",
                 "pass": "PASSWORD"
         },
-        "geofence": false
+        "geofence": [
+                {
+                        "name": "Work",
+                        "zone": [43.545617, 1.513846, 200], /* lat, lng, radius */
+                        "periods": [
+                                ["tue","10:00",7], /* day, beginning, duration in hours */
+                                ["wed","10:00",7],
+                                ["thu","10:00",7],
+                                ["fri","10:00",7]
+                        ],
+                        "active": true
+                },
+                {
+                        "name": "Home",
+                        "zone": [43.645124, 0.584670, 100],
+                        "periods": [
+                                ["mon","23:00",7],
+                                ["tue","23:00",7],
+                                ["wed","23:00",7],
+                                ["thu","23:00",7],
+                                ["fri","23:00",7],
+                                ["sat","23:00",7],
+                                ["sun","23:00",7],
+                        ],
+                        "active": true
+                },
+                {
+                        "name": "Hollidays",
+                        "zone": [43.645124, 0.584670, 100],
+                        "periods": [
+                                ["mon","00:00",24],
+                                ["tue","00:00",24],
+                                ["wed","00:00",24],
+                                ["thu","00:00",24],
+                                ["fri","00:00",24],
+                                ["sat","00:00",24],
+                                ["sun","00:00",24],
+                        ],
+                        "active": true
+                }
+        ]
 }
 
