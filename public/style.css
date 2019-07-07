@@ -12,6 +12,16 @@ body {
     height: 100%;
 }
 
+@media (max-width: 576px) {
+    header,
+    h3 {
+        display: none;
+    }
+    #mapid {
+        height: 33%;
+    }
+}
+
 .container-fluid>.row {
     height: 100%;
 }
