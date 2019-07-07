@@ -36,11 +36,11 @@ exports.get = ( quantity=1 ) => {
 
 exports.save = function (message, coords) {
     return new Promise(function (resolve, reject) {
-        if (str.substring(1, 13) != cfg.tracker.id) {
+        if (message.substring(1, 13) != cfg.tracker.id) {
             reject("Bad tracker id.");
         }
         var sql = "INSERT INTO log (message, lat, lng) VALUES ("
-            + connection.escape(str) + ", "
+            + connection.escape(message) + ", "
             + connection.escape(coords.lat) + ", "
             + connection.escape(coords.lng)
             + ")";

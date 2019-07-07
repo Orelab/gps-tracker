@@ -4,7 +4,7 @@ let map;
 
 
 $.ajax('/lasthundred').done((data) => {
-    points = data;
+    points = data.reverse();
 
     let lastItem = data[data.length-1];
 
