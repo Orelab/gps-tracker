@@ -31,7 +31,7 @@ Of course, you'll have to put the same domain and port here than in config.json.
 1. make the server log the tracker position (done)
 2. build an interface which allow to visualize the tracker position (done)
 3. make the tracker configurable thru the server GUI (in progress)
-4. tinker a geofencing functionality (to do)
-5. add a process which prevent if the tracker stops emiting data (to do)
+4. add a process which prevent if the tracker stops emiting data (to do)
+5. tinker a geofencing functionality (to do)
 ```
 

@@ -8,15 +8,8 @@ const cfg = require('./config.json');
 
 //-- Mysql stuff
 
-var mysql = require('mysql');
-var connection = mysql.createConnection({
-	host: 'localhost',
-	user: cfg.db.user,
-	password: cfg.db.pass,
-	database: cfg.db.name
-});
-
-connection.connect();
+var db = require('./database.js');
+db.init(cfg);
 
 
 
@@ -37,7 +30,7 @@ var server = net.createServer((socket) => {
 
 		if (arr.length > 2 && arr[1] == 'BR') {
 			var coords = latLng(arr);
-			save(data.toString(), coords);
+			db.save(data.toString(), coords);
 			return;
 		}
 		if (arr.length > 2 && arr[1] == 'BP') {
@@ -61,36 +54,20 @@ const app = express();
 app.use(express.static('public'));
 
 app.get('/lastposition', function (req, res) {
-	var sql = "SELECT id, date, lat, lng FROM log ORDER BY id DESC LIMIT 1;";
-
-	connection.query(sql, (error, results, fields) => {
-		if (error) {
-			res.status(500);
-			res.send(error);
-			return;
-		}
-		if (results.length)
-			res.json(results[0]);
-		else
-			res.json({ lat: 48.8589506, lng: 2.2768484 });
+	db.get(1).then( data => {
+		if( data.length )
+			res.json(data[0]);
+			else
+			res.json({ lat: 48.8589506, lng: 2.2768484 })
 	});
 });
 
-
-
 app.get('/lasthundred', function (req, res) {
-	var sql = "SELECT id, date, lat, lng FROM log ORDER BY id DESC LIMIT 1000;";
-
-	connection.query(sql, (error, results, fields) => {
-		if (error) {
-			res.status(500);
-			res.send(error);
-			return;
-		}
-		if (results.length)
-			res.json( results.reverse() );
-		else
-			res.json({ lat: 48.8589506, lng: 2.2768484 });
+	db.get(1000).then( data => {
+		if( data.length )
+			res.json(data);
+			else
+			res.json({ lat: 48.8589506, lng: 2.2768484 })
 	});
 });
 
