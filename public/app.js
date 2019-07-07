@@ -6,7 +6,20 @@ $.ajax('/lastposition').done((data) => {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
     
-    var marker = L.marker([data.lat, data.lng]).addTo(map);    
+    var marker = L.marker([data.lat, data.lng]).addTo(map);
+
+    var opt = {
+        weekday:'long', 
+        year:'numeric', 
+        month:'long', 
+        day:'numeric', 
+        hour12: false, 
+        hour: '2-digit', 
+        minute:'2-digit' 
+    };
+    var time = ( new Date(data.date) ).toLocaleTimeString('fr-FR', opt);
+
+    marker.bindPopup("<b>Last recording :</b><br>"+time).openPopup();
 });
 
 
