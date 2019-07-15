@@ -51,3 +51,27 @@ exports.save = function (message, coords) {
         });
     });
 }
+
+
+/*
+    The following method delete every recording with make reference to a
+    minute previously recorded (dedupe = dédoublonner).
+*/
+
+exports.dedupe = function() {
+    let sql = `
+        DELETE
+        FROM log
+        WHERE id IN (
+            SELECT * FROM (
+                SELECT log.id
+                FROM log, log as second 
+                WHERE log.id = (second.id-1)
+                AND DATE_FORMAT(log.date, '%y%m%d%H%i') = DATE_FORMAT(second.date, '%y%m%d%H%i')
+            ) AS p
+        );
+    `;
+    connection.query(sql, (error, results, fields)=>{
+        if (error) console.log(error);
+    });
+}

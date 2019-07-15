@@ -86,6 +86,14 @@ app.listen(cfg.web.port, function () {
 
 
 
+//-- Misc cron function
+
+setInterval(function(){
+	db.dedupe();
+	console.log('Database optimized !');
+}, 600000); // every 10 minutes
+
+
 
 //-- Misc functions
 
