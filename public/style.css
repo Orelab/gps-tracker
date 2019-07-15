@@ -12,13 +12,17 @@ body {
     height: calc(100% - 45px);
 }
 
+
 @media (max-width: 992px) {
     header,
     h3 {
         display: none;
     }
     #mapid {
-        height: 33%;
+        height: calc(100% - 45px);
+    }
+    body>.row>.col-lg-6:first-of-type {
+        height: calc(50% - 45px);
     }
 }
 
