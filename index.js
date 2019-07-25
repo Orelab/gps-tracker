@@ -117,12 +117,14 @@ let save = (str, coords) => {
 let latLng = (arr) => {
 	var date = arr[2];
 
-	var latDeg = arr[4].substring(0, 2);
-	var latMin = arr[4].substring(2);
+	var i = arr[4].indexOf('.')-2;
+	var latDeg = arr[4].substring(0, i);
+	var latMin = arr[4].substring(i);
 	var lat = parseFloat(latDeg) + parseFloat(latMin) / 60;
 
-	var lngDeg = arr[6].substring(0, 2);
-	var lngMin = arr[6].substring(2);
+	var j = arr[6].indexOf('.')-2;
+	var lngDeg = arr[6].substring(0, j);
+	var lngMin = arr[6].substring(j);
 	var lng = parseFloat(lngDeg) + parseFloat(lngMin) / 60;
 
 	//console.log("https://maps.google.com/maps?q=N" + lat + ",E" + lng + "\r");
